@@ -6,7 +6,6 @@ import com.cmcc.gray.holder.GrayFlagRequestHolder;
 import com.netflix.loadbalancer.AbstractLoadBalancerRule;
 import com.netflix.loadbalancer.ILoadBalancer;
 import com.netflix.loadbalancer.Server;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
@@ -16,11 +15,7 @@ import java.util.Map;
 
 
 public abstract class AbstractGrayLoadBalancerRule extends AbstractLoadBalancerRule {
-    //@Autowired
-    //private GrayVersionProperties grayVersionProperties;
 
-    @Value("${spring.cloud.nacos.discovery.metadata.version}")
-    private String metaVersion;
     private static final String GRAY_TAG = "version";
 
     /**
@@ -62,21 +57,6 @@ public abstract class AbstractGrayLoadBalancerRule extends AbstractLoadBalancerR
         //}
         List<Server> prodServers = new ArrayList<>();
 
-        //String currentVersion = metaVersion;
-        //GrayStatusEnum grayStatusEnum = GrayFlagRequestHolder.getGrayTag();
-        //if (grayStatusEnum != null) {
-        //    switch (grayStatusEnum) {
-        //        case ALL:
-        //            return servers;
-        //        case PROD:
-        //            currentVersion = grayVersionProperties.getProdVersion();
-        //            break;
-        //        case GRAY:
-        //            currentVersion = grayVersionProperties.getGrayVersion();
-        //            break;
-        //    }
-        //}
-        // todo：针对没有匹配的灰度版本需要返回生产版本
         for (Server server : servers) {
             NacosServer nacosServer = (NacosServer) server;
             Map<String, String> metadata = nacosServer.getMetadata();
